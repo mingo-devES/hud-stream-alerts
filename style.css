@@ -1,0 +1,204 @@
+:root {
+    --bg-dark: #07090e;
+    --card-bg: #0d121b;
+    --border-color: #1f293d;
+    --font-title: 'Teko', sans-serif;
+    --font-body: 'Rajdhani', sans-serif;
+    
+    /* Variables de Tema por Defecto (RPG Gold) */
+    --primary: #f39c12;
+    --primary-glow: rgba(243, 156, 18, 0.5);
+    --secondary-bg: linear-gradient(135deg, #1e150a 0%, #0d0904 100%);
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #ffffff;
+    font-family: var(--font-body);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Header del Estudio */
+.studio-header {
+    background: #0a0e17;
+    border-bottom: 2px solid var(--border-color);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-icon {
+    font-size: 24px;
+    background: #131b2c;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.studio-header h1 {
+    font-family: var(--font-title);
+    font-size: 22px;
+    letter-spacing: 2px;
+    margin: 0;
+    color: #fff;
+}
+
+.studio-header p {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+#obs-btn {
+    background: #e67e22;
+    color: #fff;
+    font-family: var(--font-title);
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#obs-btn:hover {
+    background: #d35400;
+}
+
+/* Contenedores de Control */
+.studio-container {
+    max-width: 750px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.control-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.control-card h2 {
+    font-family: var(--font-title);
+    font-size: 20px;
+    letter-spacing: 1.5px;
+    color: #94a3b8;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.theme-selector, .alert-triggers {
+    display: flex;
+    gap: 12px;
+}
+
+.theme-btn, .trigger-btn {
+    flex: 1;
+    background: #111827;
+    color: #cbd5e1;
+    border: 2px solid var(--border-color);
+    padding: 10px;
+    font-family: var(--font-title);
+    font-size: 18px;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.theme-btn.rpg.active, .theme-btn.rpg:hover { border-color: #f39c12; color: #f39c12; background: rgba(243,156,18,0.1); }
+.theme-btn.sciFi.active, .theme-btn.sciFi:hover { border-color: #00d2ff; color: #00d2ff; background: rgba(0,210,255,0.1); }
+.theme-btn.boss.active, .theme-btn.boss:hover { border-color: #ff334b; color: #ff334b; background: rgba(255,51,75,0.1); }
+
+.trigger-btn {
+    background: #1e293b;
+    border: 1px solid #475569;
+}
+.trigger-btn:hover {
+    background: #334155;
+    color: #fff;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 100%;
+    background: #05070a;
+    border: 1px solid var(--border-color);
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   WIDGET DE ALERTA - ESTILO HUD VIDEOJUEGO
+   ========================================== */
+#alert-box {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 420px;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#alert-box.visible-preview {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+#alert-box.animate {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    animation: alertBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Marco Metálico y Geométrico de Videojuego */
+.hud-border-outer {
+    position: relative;
+    background: var(--secondary-bg);
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.9), inset 0 0 20px var(--primary-glow);
+}
+
+/* Esquinas recortadas estilo Sci-Fi / RPG */
+.hud-corner {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+}

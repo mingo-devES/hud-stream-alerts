@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HUD Alert Studio - Gaming Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Panel de control del Estudio -->
+    <header class="studio-header">
+        <div class="logo-area">
+            <span class="logo-icon">🎮</span>
+            <div>
+                <h1>HUD ALERT STUDIO</h1>
+                <p>Porfolio DAW - Álvaro (MingoDev)</p>
+            </div>
+        </div>
+        <button id="obs-btn" onclick="toggleOBSMode()">Modo OBS (Transparente)</button>
+    </header>
+
+    <main class="studio-container">
+        <!-- Selector de Facciones / Juegos -->
+        <section class="control-card">
+            <h2>🛡️ Selector de Facción / HUD</h2>
+            <div class="theme-selector">
+                <button class="theme-btn rpg active" onclick="setTheme('rpg')">RPG Gold (Fantasy)</button>
+                <button class="theme-btn sciFi" onclick="setTheme('sciFi')">Sci-Fi Energy (Blue)</button>
+                <button class="theme-btn boss" onclick="setTheme('boss')">Boss Alert (Crimson)</button>
+            </div>
+        </section>
+
+        <!-- Panel de Pruebas -->
+        <section class="control-card">
+            <h2>⚡ Simular Alertas de Juego</h2>
+            <div class="input-grid">
+                <div class="input-group">
+                    <label for="username">Nombre del Jugador</label>
+                    <input type="text" id="username" value="MingoDev" oninput="updateAlertText()">
+                </div>
+                <div class="input-group">
+                    <label for="message">Recompensa / Mensaje</label>
+                    <input type="text" id="message" value="¡Se ha unido a la party con éxito!" oninput="updateAlertText()">
+                </div>
+            </div>
+            <div class="alert-triggers">
+                <button class="trigger-btn follow" onclick="triggerAlert('follow', '¡NUEVO PLAYER!')">New Player</button>
+                <button class="trigger-btn sub" onclick="triggerAlert('sub', '¡LEVEL UP / SUB!')">Level Up</button>
+                <button class="trigger-btn raid" onclick="triggerAlert('raid', '¡BOSS RAID ENTRANTE!')">Boss Raid</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- WIDGET DE ALERTA (HUD DE VIDEOJUEGO CAPTURABLE POR OBS) -->
+    <div id="alert-box" class="rpg-theme visible-preview">
+        <div class="hud-border-outer">
+            <div class="hud-corner top-left"></div>
+            <div class="hud-corner top-right"></div>
+            <div class="hud-corner bottom-left"></div>
+            <div class="hud-corner bottom-right"></div>
+            
+            <div class="alert-content">
+                <div class="alert-emblem">
+                    <span id="alert-icon">⚔️</span>
+                </div>
+                <div class="alert-text-container">
+                    <div class="tag-row">
+                        <span id="alert-tag">¡NUEVO PLAYER!</span>
+                        <span class="server-badge">EU-WEST</span>
+                    </div>
+                    <h3 id="alert-user">MingoDev</h3>
+                    <p id="alert-msg">¡Se ha unido a la party con éxito!</p>
+                </div>
+            </div>
+            <!-- Barra de energía inferior tipo HUD -->
+            <div class="hud-energy-bar">
+                <div class="energy-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
