@@ -10,18 +10,41 @@ const inputMessage = document.getElementById('message');
 
 let audioCtx = null;
 
+// Leer parámetros de la URL automáticamente al cargar (para OBS / Streamlabs)
+window.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlUsername = urlParams.get('username');
+    const urlMessage = urlParams.get('message');
+    const mode = urlParams.get('mode');
+
+    if (urlUsername && inputUsername) {
+        inputUsername.value = urlUsername;
+    }
+    if (urlMessage && inputMessage) {
+        inputMessage.value = urlMessage;
+    }
+
+    updateAlertText();
+
+    // Si detecta el modo OBS o widget en la URL, activa el modo limpio automáticamente
+    if (mode === 'obs' || mode === 'widget') {
+        toggleOBSMode();
+    }
+});
+
 // Cambiar Tema de Videojuego
 function setTheme(theme) {
     alertBox.className = `${theme}-theme visible-preview`;
     
     document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelector(`.theme-btn.${theme}`).classList.add('active');
+    const activeBtn = document.querySelector(`.theme-btn.${theme}`);
+    if (activeBtn) activeBtn.classList.add('active');
 }
 
 // Actualizar textos en tiempo real
 function updateAlertText() {
-    alertUser.textContent = inputUsername.value || "Player";
-    alertMsg.textContent = inputMessage.value;
+    alertUser.textContent = inputUsername && inputUsername.value ? inputUsername.value : "Player";
+    alertMsg.textContent = inputMessage ? inputMessage.value : "";
 }
 
 // Sonido de interfaz de videojuego (Web Audio API)
@@ -66,21 +89,31 @@ function triggerAlert(type, labelText) {
     alertBox.classList.add('animate');
 
     // Reiniciar animación de la barra inferior
-    energyFill.style.animation = 'none';
-    void energyFill.offsetWidth;
-    energyFill.style.animation = 'drainEnergy 4s linear forwards';
+    if (energyFill) {
+        energyFill.style.animation = 'none';
+        void energyFill.offsetWidth;
+        energyFill.style.animation = 'drainEnergy 4s linear forwards';
+    }
 
     // Ocultar pasados 4 segundos
     setTimeout(() => {
         alertBox.classList.remove('animate');
-        alertBox.classList.add('visible-preview');
+        // Si estamos en modo OBS, ocultamos la caja tras la alerta; si no, volvemos al preview
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('mode') !== 'obs' && urlParams.get('mode') !== 'widget') {
+            alertBox.classList.add('visible-preview');
+        }
     }, 4000);
 }
 
 // Modo OBS (Pantalla limpia solo con el HUD flotante)
 function toggleOBSMode() {
-    document.querySelector('.studio-header').style.display = 'none';
-    document.querySelector('.studio-container').style.display = 'none';
+    const header = document.querySelector('.studio-header');
+    const container = document.querySelector('.studio-container');
+    
+    if (header) header.style.display = 'none';
+    if (container) container.style.display = 'none';
+    
     document.body.style.backgroundColor = 'transparent';
-    alertBox.classList.remove('visible-preview');
+    if (alertBox) alertBox.classList.remove('visible-preview');
 }
